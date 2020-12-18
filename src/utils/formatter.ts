@@ -1,6 +1,6 @@
 import * as cardTypes from './cardTypes';
 
-export const formatCardNumber = cardNumber => {
+export const formatCardNumber = (cardNumber: any) => {
   const cardType = cardTypes.getCardTypeByValue(cardNumber);
 
   if (!cardType) return (cardNumber.match(/\d+/g) || []).join('');
@@ -23,7 +23,7 @@ export const formatCardNumber = cardNumber => {
   return cardNumber;
 };
 
-export const formatExpiry = event => {
+export const formatExpiry = (event: any) => {
   const eventData = event.nativeEvent && event.nativeEvent.data;
   const prevExpiry = event.target.value.split(' / ').join('/');
 

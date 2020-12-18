@@ -15,29 +15,29 @@ export const MONTH_OUT_OF_RANGE = 'Expiry month must be between 01 and 12';
 export const YEAR_OUT_OF_RANGE = 'Expiry year cannot be in the past';
 export const DATE_OUT_OF_RANGE = 'Expiry date cannot be in the past';
 
-export const hasCardNumberReachedMaxLength = currentValue => {
+export const hasCardNumberReachedMaxLength = (currentValue: any) => {
   const cardType = cardTypes.getCardTypeByValue(currentValue);
   return cardType && currentValue.length >= cardType.lengths[cardType.lengths.length - 1];
 };
 
-export const isNumeric = e => {
+export const isNumeric = (e: any) => {
   return /^\d*$/.test(e.key);
 };
 
-export const validateLuhn = cardNumber => {
+export const validateLuhn = (cardNumber: any) => {
   return (
     cardNumber
       .split('')
       .reverse()
-      .map(digit => parseInt(digit, 10))
-      .map((digit, idx) => (idx % 2 ? digit * 2 : digit))
-      .map(digit => (digit > 9 ? (digit % 10) + 1 : digit))
-      .reduce((accum, digit) => (accum += digit)) %
+      .map((digit: any) => parseInt(digit, 10))
+      .map((digit: any, idx: any) => (idx % 2 ? digit * 2 : digit))
+      .map((digit: any) => (digit > 9 ? (digit % 10) + 1 : digit))
+      .reduce((accum: any, digit: any) => (accum += digit)) %
     10 ===
     0
   );
 };
-export const getCardNumberError = (cardNumber, cardNumberValidator, { errorMessages = {} } = {}) => {
+export const getCardNumberError = (cardNumber: any, cardNumberValidator: any, { errorMessages = { emptyCardNumber: undefined, invalidCardNumber: undefined } } = {}) => {
   if (!cardNumber) {
     return errorMessages.emptyCardNumber || EMPTY_CARD_NUMBER;
   }
@@ -58,7 +58,13 @@ export const getCardNumberError = (cardNumber, cardNumberValidator, { errorMessa
   }
   return errorMessages.invalidCardNumber || INVALID_CARD_NUMBER;
 };
-export const getExpiryDateError = (expiryDate, expiryValidator, { errorMessages = {} } = {}) => {
+export const getExpiryDateError = (expiryDate: any, expiryValidator: any, { errorMessages = {
+  monthOutOfRange: undefined,
+  emptyExpiryDate: undefined,
+  yearOutOfRange: undefined,
+  dateOutOfRange: undefined,
+  invalidExpiryDate: undefined
+} } = {}) => {
   if (!expiryDate) {
     return errorMessages.emptyExpiryDate || EMPTY_EXPIRY_DATE;
   }
@@ -82,7 +88,12 @@ export const getExpiryDateError = (expiryDate, expiryValidator, { errorMessages 
   }
   return errorMessages.invalidExpiryDate || INVALID_EXPIRY_DATE;
 };
-export const getCVCError = (cvc, cvcValidator, { cardType, errorMessages = {} } = {}) => {
+export const getCVCError = (cvc: any, cvcValidator: any, {
+  cardType = undefined,
+  errorMessages = {
+    emptyCVC: undefined,
+    invalidCVC: undefined
+  } }: any) => {
   if (!cvc) {
     return errorMessages.emptyCVC || EMPTY_CVC;
   }
@@ -97,7 +108,7 @@ export const getCVCError = (cvc, cvcValidator, { cardType, errorMessages = {} } 
   }
   return;
 };
-export const getZIPError = (zip, { errorMessages = {} } = {}) => {
+export const getZIPError = (zip: any, { errorMessages = { emptyZIP: undefined } } = {}) => {
   if (!zip) {
     return errorMessages.emptyZIP || EMPTY_ZIP;
   }

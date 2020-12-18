@@ -6,10 +6,10 @@ const FieldWrapper = styled.div`
   flex-direction: column;
 
   & {
-    ${props => (props.hasErrored && props.styles.fieldWrapper ? props.styles.fieldWrapper.errored : undefined)};
+    ${(props: any) => (props.hasErrored && props.styles.fieldWrapper ? props.styles.fieldWrapper.errored : undefined)};
   }
 
-  ${props => (props.styles.fieldWrapper ? props.styles.fieldWrapper.base : undefined)};
+  ${(props: any) => (props.styles.fieldWrapper ? props.styles.fieldWrapper.base : undefined)};
 `;
 const InputWrapper = styled.div`
   align-items: center;
@@ -22,22 +22,22 @@ const InputWrapper = styled.div`
   padding: 0.4em 0.6em;
 
   & {
-    ${props =>
-      props.hasErrored &&
-      css`
+    ${(props: any) =>
+    props.hasErrored &&
+    css`
         border-color: #c9444d;
         box-shadow: #c9444d 0px 0px 0px 1px;
-        ${props => props.styles.inputWrapper && props.styles.inputWrapper.errored};
+        ${(props: any) => props.styles.inputWrapper && props.styles.inputWrapper.errored};
       `};
   }
 
   & {
-    ${props =>
-      props.focused &&
-      css`
+    ${(props: any) =>
+    props.focused &&
+    css`
         border-color: #444bc9;
         box-shadow: #444bc9 0px 0px 0px 1px;
-        ${props => props.styles.inputWrapper && props.styles.inputWrapper.focused};
+        ${(props: any) => props.styles.inputWrapper && props.styles.inputWrapper.focused};
       `};
   }
 
@@ -49,48 +49,48 @@ const InputWrapper = styled.div`
     font-size: inherit;
 
     & {
-      ${props => (props.hasErrored && props.styles.input ? props.styles.input.errored : undefined)};
+      ${(props: any) => (props.hasErrored && props.styles.input ? props.styles.input.errored : undefined)};
     }
 
-    ${props => props.styles.input && props.styles.input.base};
+    ${(props: any) => props.styles.input && props.styles.input.base};
   }
 
   & svg {
     margin-right: 0.6em;
     & {
-      ${props => props.styles.cardImage};
+      ${(props: any) => props.styles.cardImage};
     }
   }
 
   & input#cardNumber {
     width: 11em;
     & {
-      ${props => props.styles.input && props.styles.input.cardNumber};
+      ${(props: any) => props.styles.input && props.styles.input.cardNumber};
     }
   }
 
   & input#expiryDate {
     width: 4em;
     & {
-      ${props => props.styles.input && props.styles.input.expiryDate};
+      ${(props: any) => props.styles.input && props.styles.input.expiryDate};
     }
   }
 
   & input#cvc {
     width: 2.5em;
     & {
-      ${props => props.styles.input && props.styles.input.cvc};
+      ${(props: any) => props.styles.input && props.styles.input.cvc};
     }
   }
 
   & input#zip {
     width: 4em;
     & {
-      ${props => props.styles.input && props.styles.input.zip};
+      ${(props: any) => props.styles.input && props.styles.input.zip};
     }
   }
 
-  ${props => (props.styles.inputWrapper ? props.styles.inputWrapper.base : undefined)};
+  ${(props: any) => (props.styles.inputWrapper ? props.styles.inputWrapper.base : undefined)};
 `;
 const ErrorText = styled.div`
   color: #c9444d;
@@ -98,11 +98,11 @@ const ErrorText = styled.div`
   margin-top: 0.25rem;
 
   & {
-    ${props => (props.styles.errorText ? props.styles.errorText.base : undefined)};
+    ${(props: any) => (props.styles.errorText ? props.styles.errorText.base : undefined)};
   }
 `;
 
-function PaymentInputsWrapper(props) {
+function PaymentInputsWrapper(props: any) {
   const { children, error, errorTextProps, focused, inputWrapperProps, isTouched, styles, ...restProps } = props;
   const hasErrored = error && isTouched;
   return (

@@ -124,5 +124,5 @@ export const CARD_TYPES = [
   }
 ];
 
-export const getCardTypeByValue = value => CARD_TYPES.filter(cardType => cardType.startPattern.test(value))[0];
-export const getCardTypeByType = type => CARD_TYPES.filter(cardType => cardType.type === type)[0];
+export const getCardTypeByValue = (value: any) => CARD_TYPES.filter(cardType => cardType.startPattern.test(value))[0];
+export const getCardTypeByType = (type: any) => CARD_TYPES.filter(cardType => cardType.type === type)[0];

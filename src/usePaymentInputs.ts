@@ -12,11 +12,21 @@ export default function usePaymentCard({
   cardNumberValidator,
   cvcValidator,
   expiryValidator
-} = {}) {
-  const cardNumberField = React.useRef();
-  const expiryDateField = React.useRef();
-  const cvcField = React.useRef();
-  const zipField = React.useRef();
+}: {
+  autoFocus: boolean,
+  errorMessages: any,
+  onBlur: any,
+  onChange: any,
+  onError: any,
+  onTouch: any,
+  cardNumberValidator: any,
+  cvcValidator: any,
+  expiryValidator: any
+}) {
+  const cardNumberField = React.useRef<any>();
+  const expiryDateField = React.useRef<any>();
+  const cvcField = React.useRef<any>();
+  const zipField = React.useRef<any>();
 
   /** ====== START: META STUFF ====== */
   const [touchedInputs, setTouchedInputs] = React.useState({
@@ -32,12 +42,12 @@ export default function usePaymentCard({
     cvc: undefined,
     zip: undefined
   });
-  const [error, setError] = React.useState();
-  const [cardType, setCardType] = React.useState();
-  const [focused, setFocused] = React.useState();
+  const [error, setError] = React.useState<any>();
+  const [cardType, setCardType] = React.useState<any>();
+  const [focused, setFocused] = React.useState<any>();
 
   const setInputError = React.useCallback((input, error) => {
-    setErroredInputs(erroredInputs => {
+    setErroredInputs((erroredInputs: any) => {
       if (erroredInputs[input] === error) return erroredInputs;
 
       let newError = error;
@@ -55,14 +65,14 @@ export default function usePaymentCard({
 
   const setInputTouched = React.useCallback((input, value) => {
     requestAnimationFrame(() => {
-      if (document.activeElement.tagName !== 'INPUT') {
+      if ((document as any).activeElement.tagName !== 'INPUT') {
         setIsTouched(true);
       } else if (value === false) {
         setIsTouched(false);
       }
     });
 
-    setTouchedInputs(touchedInputs => {
+    setTouchedInputs((touchedInputs: any) => {
       if (touchedInputs[input] === value) return touchedInputs;
 
       const newTouchedInputs = { ...touchedInputs, [input]: value };
@@ -75,7 +85,7 @@ export default function usePaymentCard({
   /** ====== START: CARD NUMBER STUFF ====== */
   const handleBlurCardNumber = React.useCallback(
     (props = {}) => {
-      return e => {
+      return (e: any) => {
         props.onBlur && props.onBlur(e);
         onBlur && onBlur(e);
         setFocused(undefined);
@@ -87,7 +97,7 @@ export default function usePaymentCard({
 
   const handleChangeCardNumber = React.useCallback(
     (props = {}) => {
-      return e => {
+      return (e: { target: { value: string; }; }) => {
         const formattedCardNumber = e.target.value || '';
         const cardNumber = formattedCardNumber.replace(/\s/g, '');
         let cursorPosition = cardNumberField.current.selectionStart;
@@ -125,14 +135,14 @@ export default function usePaymentCard({
   );
 
   const handleFocusCardNumber = React.useCallback((props = {}) => {
-    return e => {
+    return (e: any) => {
       props.onFocus && props.onFocus(e);
       setFocused('cardNumber');
     };
   }, []);
 
   const handleKeyPressCardNumber = React.useCallback((props = {}) => {
-    return e => {
+    return (e: { target: { value: string; }; key: any; preventDefault: () => void; }) => {
       const formattedCardNumber = e.target.value || '';
       const cardNumber = formattedCardNumber.replace(/\s/g, '');
 
@@ -171,7 +181,7 @@ export default function usePaymentCard({
   /** ====== START: EXPIRY DATE STUFF ====== */
   const handleBlurExpiryDate = React.useCallback(
     (props = {}) => {
-      return e => {
+      return (e: any) => {
         props.onBlur && props.onBlur(e);
         onBlur && onBlur(e);
         setFocused(undefined);
@@ -183,7 +193,7 @@ export default function usePaymentCard({
 
   const handleChangeExpiryDate = React.useCallback(
     (props = {}) => {
-      return e => {
+      return (e: any) => {
         setInputTouched('expiryDate', false);
 
         expiryDateField.current.value = utils.formatter.formatExpiry(e);
@@ -204,7 +214,7 @@ export default function usePaymentCard({
   );
 
   const handleFocusExpiryDate = React.useCallback((props = {}) => {
-    return e => {
+    return (e: any) => {
       props.onFocus && props.onFocus(e);
       setFocused('expiryDate');
     };
@@ -212,7 +222,7 @@ export default function usePaymentCard({
 
   const handleKeyDownExpiryDate = React.useCallback(
     (props = {}) => {
-      return e => {
+      return (e: { key: any; target: { value: any; }; }) => {
         props.onKeyDown && props.onKeyDown(e);
 
         if (e.key === utils.BACKSPACE_KEY_CODE && !e.target.value && autoFocus) {
@@ -224,7 +234,7 @@ export default function usePaymentCard({
   );
 
   const handleKeyPressExpiryDate = React.useCallback((props = {}) => {
-    return e => {
+    return (e: { target: { value: string; }; key: any; preventDefault: () => void; }) => {
       const formattedExpiryDate = e.target.value || '';
       const expiryDate = formattedExpiryDate.replace(' / ', '');
 
@@ -270,7 +280,7 @@ export default function usePaymentCard({
   /** ====== START: CVC STUFF ====== */
   const handleBlurCVC = React.useCallback(
     (props = {}) => {
-      return e => {
+      return (e: any) => {
         props.onBlur && props.onBlur(e);
         onBlur && onBlur(e);
         setFocused(undefined);
@@ -282,7 +292,7 @@ export default function usePaymentCard({
 
   const handleChangeCVC = React.useCallback(
     (props = {}, { cardType } = {}) => {
-      return e => {
+      return (e: { target: { value: any; }; }) => {
         const cvc = e.target.value;
 
         setInputTouched('cvc', false);
@@ -302,7 +312,7 @@ export default function usePaymentCard({
   );
 
   const handleFocusCVC = React.useCallback((props = {}) => {
-    return e => {
+    return (e: any) => {
       props.onFocus && props.onFocus(e);
       setFocused('cvc');
     };
@@ -310,7 +320,7 @@ export default function usePaymentCard({
 
   const handleKeyDownCVC = React.useCallback(
     (props = {}) => {
-      return e => {
+      return (e: { key: any; target: { value: any; }; }) => {
         props.onKeyDown && props.onKeyDown(e);
 
         if (e.key === utils.BACKSPACE_KEY_CODE && !e.target.value && autoFocus) {
@@ -322,7 +332,7 @@ export default function usePaymentCard({
   );
 
   const handleKeyPressCVC = React.useCallback((props = {}, { cardType }) => {
-    return e => {
+    return (e: { target: { value: string; }; key: any; preventDefault: () => void; }) => {
       const formattedCVC = e.target.value || '';
       const cvc = formattedCVC.replace(' / ', '');
 
@@ -365,7 +375,7 @@ export default function usePaymentCard({
   /** ====== START: ZIP STUFF ====== */
   const handleBlurZIP = React.useCallback(
     (props = {}) => {
-      return e => {
+      return (e: any) => {
         props.onBlur && props.onBlur(e);
         onBlur && onBlur(e);
         setFocused(undefined);
@@ -377,7 +387,7 @@ export default function usePaymentCard({
 
   const handleChangeZIP = React.useCallback(
     (props = {}) => {
-      return e => {
+      return (e: { target: { value: any; }; }) => {
         const zip = e.target.value;
 
         setInputTouched('zip', false);
@@ -394,7 +404,7 @@ export default function usePaymentCard({
   );
 
   const handleFocusZIP = React.useCallback((props = {}) => {
-    return e => {
+    return (e: any) => {
       props.onFocus && props.onFocus(e);
       setFocused('zip');
     };
@@ -402,7 +412,7 @@ export default function usePaymentCard({
 
   const handleKeyDownZIP = React.useCallback(
     (props = {}) => {
-      return e => {
+      return (e: { key: any; target: { value: any; }; }) => {
         props.onKeyDown && props.onKeyDown(e);
 
         if (e.key === utils.BACKSPACE_KEY_CODE && !e.target.value && autoFocus) {
@@ -414,7 +424,7 @@ export default function usePaymentCard({
   );
 
   const handleKeyPressZIP = React.useCallback((props = {}) => {
-    return e => {
+    return (e: { key: any; preventDefault: () => void; }) => {
       props.onKeyPress && props.onKeyPress(e);
 
       if (e.key !== utils.ENTER_KEY_CODE) {
